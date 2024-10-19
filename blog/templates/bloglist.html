@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlogNest</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            color: #2c3e50;
+            font-size: 36px;
+        }
+
+        h2 {
+            color: #34495e;
+            font-size: 24px;
+        }
+
+        a {
+            display: inline-block;
+            background-color: #3498db;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 20px;
+            border-radius: 5px;
+            font-size: 18px;
+        }
+
+        a:hover {
+            background-color: #2980b9;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 20px auto;
+            max-width: 800px;
+        }
+
+        li {
+            background-color: white;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        img {
+            display: block;
+            margin: 20px auto;
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        video {
+            display: block;
+            margin: 20px auto;
+            border-radius: 10px;
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>BlogNest</h1>
+    <a href="{% url 'blogcreate' %}"><h2>Create Blog</h2></a>
+    <ul>
+        {% for i in blogs %}
+        <li>
+            <h2>{{ i.title }}</h2>
+            <p>{{ i.content }}</p>
+            {% if i.image %}
+            <img src="{{ i.image.url }}" alt="{{ i.title }}">
+            {% endif %}
+            {% if i.video %}
+            <video controls>
+                <source src="{{ i.video.url }}" type="video/mp4">
+                Your browser doesn't support the video tag.
+            </video>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
