@@ -84,7 +84,8 @@
         {% for i in blogs %}
         <li>
             <h2>{{ i.title }}</h2>
-            <p>{{ i.content }}</p>
+            {% load markdown_extras %}
+            <p>{{ i.content |markdownify|safe }}</p>
             {% if i.image %}
             <img src="{{ i.image.url }}" alt="{{ i.title }}">
             {% endif %}
