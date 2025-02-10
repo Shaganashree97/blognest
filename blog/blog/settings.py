@@ -70,6 +70,8 @@ TEMPLATES = [
         },
     },
 ]
+LOGIN_REDIRECT_URL = 'bloglist'  
+LOGIN_URL = 'login'
 
 WSGI_APPLICATION = 'blog.wsgi.application'
 
@@ -77,13 +79,19 @@ WSGI_APPLICATION = 'blog.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': 'blog',
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         'NAME': 'blog',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -123,6 +131,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 MEDIA_URL='/media/'
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
 MEDIA_ROOT=os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
