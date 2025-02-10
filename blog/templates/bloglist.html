@@ -1,50 +1,86 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BlogNest</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f2f5;
             margin: 0;
             padding: 0;
             color: #333;
         }
 
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #2c3e50;
+            color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
         h1 {
+            margin: 0;
+            font-size: 32px;
+        }
+
+        .logout-form {
+            margin: 0;
+        }
+
+        .logout-button {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s ease-in-out;
+        }
+
+        .logout-button:hover {
+            background-color: #c0392b;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .create-blog {
+            display: block;
             text-align: center;
-            margin-top: 20px;
-            color: #2c3e50;
-            font-size: 36px;
-        }
-
-        h2 {
-            color: #34495e;
-            font-size: 24px;
-        }
-
-        a {
-            display: inline-block;
             background-color: #3498db;
             color: white;
             text-decoration: none;
-            padding: 10px 20px;
-            margin: 20px;
+            padding: 12px 25px;
             border-radius: 5px;
             font-size: 18px;
+            font-weight: bold;
+            transition: background 0.3s;
+            margin-bottom: 20px;
         }
 
-        a:hover {
+        .create-blog:hover {
             background-color: #2980b9;
         }
 
         ul {
             list-style: none;
             padding: 0;
-            margin: 20px auto;
-            max-width: 800px;
         }
 
         li {
@@ -53,6 +89,17 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        li:hover {
+            transform: scale(1.02);
+        }
+
+        h2 {
+            color: #34495e;
+            font-size: 24px;
+            margin-bottom: 10px;
         }
 
         p {
@@ -61,42 +108,52 @@
             color: #555;
         }
 
-        img {
+        img, video {
             display: block;
             margin: 20px auto;
             max-width: 100%;
             height: auto;
             border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
         video {
-            display: block;
-            margin: 20px auto;
-            border-radius: 10px;
             max-width: 100%;
         }
     </style>
 </head>
 <body>
-    <h1>BlogNest</h1>
-    <a href="{% url 'blogcreate' %}"><h2>Create Blog</h2></a>
-    <ul>
-        {% for i in blogs %}
-        <li>
-            <h2>{{ i.title }}</h2>
-            {% load markdown_extras %}
-            <p>{{ i.content |markdownify|safe }}</p>
-            {% if i.image %}
-            <img src="{{ i.image.url }}" alt="{{ i.title }}">
-            {% endif %}
-            {% if i.video %}
-            <video controls>
-                <source src="{{ i.video.url }}" type="video/mp4">
-                Your browser doesn't support the video tag.
-            </video>
-            {% endif %}
-        </li>
-        {% endfor %}
-    </ul>
+
+    <div class="header">
+        <h1>BlogNest</h1>
+        <form method="POST" action="{% url 'logout' %}" class="logout-form">
+            {% csrf_token %}
+            <button type="submit" class="logout-button">Logout</button>
+        </form>
+    </div>
+
+    <div class="container">
+        <a href="{% url 'blogcreate' %}" class="create-blog">Create Blog</a>
+
+        <ul>
+            {% for i in blogs %}
+            <li>
+                <h2>{{ i.title }}</h2>
+                {% load markdown_extras %}
+                <p>{{ i.content |markdownify|safe }}</p>
+                {% if i.image %}
+                <img src="{{ i.image.url }}" alt="{{ i.title }}">
+                {% endif %}
+                {% if i.video %}
+                <video controls>
+                    <source src="{{ i.video.url }}" type="video/mp4">
+                    Your browser doesn't support the video tag.
+                </video>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
 </body>
 </html>
